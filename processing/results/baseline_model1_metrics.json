@@ -1,0 +1,13 @@
+{
+  "dataset": "validation",
+  "split": {
+    "start": "2022-01-01",
+    "end": "2023-12-31"
+  },
+  "n_samples": 53894,
+  "MAE_eur": 3405490.7781942333,
+  "MAPE_pct": 70.13012322670164,
+  "RMSE_eur": 9462423.556973469,
+  "R2_log": 0.13899216826151872,
+  "strategy": "mediana por (position_rank, league_tier) com fallback"
+}

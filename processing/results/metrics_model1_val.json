@@ -1,0 +1,33 @@
+{
+  "dataset": "validation",
+  "split": {
+    "train_end": "2021-12-31",
+    "val_start": "2022-01-01",
+    "val_end": "2023-12-31"
+  },
+  "n_train": 220582,
+  "n_val": 53894,
+  "n_features": 40,
+  "device": "cuda",
+  "MAE_eur": 1641368.0695937863,
+  "MAPE_pct": 45.79743684383531,
+  "RMSE_eur": 4056270.9614616106,
+  "RMSE_log": 0.5419885993993523,
+  "R2_log": 0.7735155870713988,
+  "best_params": {
+    "n_estimators": 1157,
+    "max_depth": 7,
+    "learning_rate": 0.05047819504967324,
+    "subsample": 0.8433665487626022,
+    "colsample_bytree": 0.645811241363325,
+    "reg_alpha": 0.07672950680270849,
+    "reg_lambda": 3.299817040558694,
+    "min_child_weight": 17,
+    "gamma": 0.003815314803695957
+  },
+  "optuna_trials": 100,
+  "optuna_cv": "TimeSeriesSplit(n_splits=5)",
+  "optuna_best_rmse": 0.5870572434991214,
+  "baseline_mape_pct": 70.13012322670164,
+  "improvement_pct": 34.69648314207126
+}
