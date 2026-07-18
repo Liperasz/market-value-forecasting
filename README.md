@@ -37,19 +37,6 @@ python cli.py
 
 Isso vai abrir um menu onde é possível pesquisar o nome de jogadores através da busca por similaridade do RapidFuzz, além de simular os custos das transferências. O sistema utiliza um carregamento tardio de variáveis, ou seja, ele só joga os grandes arquivos de dados na memória quando a primeira pesquisa é feita de fato.
 
-## Casos Práticos de Simulação
-
-Para atestar que o modelo funciona na prática, foram realizados testes com transferências reais da temporada 24/25.
-
-**Kylian Mbappé (PSG para Real Madrid)**
-Como foi uma transferência sem taxa porque o jogador se tornou um agente livre, o modelo estimou um valor intrínseco extremamente alto para ele, o que condiz com o peso de ser um dos melhores jogadores do mundo atualmente.
-
-**João Neves (Benfica para PSG)**
-O modelo capturou o ágio pago por clubes ricos de forma bem clara. Como o PSG tem um poder de compra muito maior em relação ao Benfica, o multiplicador financeiro fez a predição da taxa subir de forma acentuada acima do valor base do jogador.
-
-**Leny Yoro (Lille para Manchester United)**
-O modelo demonstrou a forte valorização de defensores jovens na era moderna, além do alto poder financeiro histórico dos clubes da Premier League.
-
 ## Arquitetura
 
 O sistema funciona através da classe principal chamada TransferPredictor no arquivo predict.py. Através dessa classe é possível instanciar os modelos do XGBoost em conjunto. De forma geral, a ausência de dados sazonais ou de clubes desconhecidos não quebram o código, pois o motor preenche valores nulos de forma automatizada para manter a robustez.
