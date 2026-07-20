@@ -1,12 +1,19 @@
-# Football Transfer Intelligence
+# market-value-forecasting
 
 ## Descrição do Projeto
 
-O Football Transfer Intelligence é uma pipeline de machine learning focada em prever valores de mercado de jogadores de futebol e simular custos de transferências reais. O objetivo é utilizar dados sazonais e de contexto financeiro dos clubes para criar estimativas de mercado precisas.
+O market-value-forecasting é uma pipeline de machine learning focada em prever valores de mercado de jogadores de futebol e simular custos de transferências reais. O objetivo é utilizar dados sazonais e de contexto financeiro dos clubes para criar estimativas de mercado precisas.
 
 É possível gerar essas predições de duas formas diferentes. O modelo primário serve para prever o valor intrínseco do jogador, enquanto um segundo modelo simula o valor final pago na transferência, dependendo do clube que compra e do clube que vende. A ideia é utilizar a regressão quantílica no modelo de transferência para prever cenários otimistas e pessimistas, invés de prever apenas um número fixo.
 
 ## Instalação e Execução
+
+Para começar, clone o repositório para sua máquina local e acesse o diretório do projeto:
+
+```bash
+git clone https://github.com/Liperasz/market-value-forecasting.git
+cd market-value-forecasting
+```
 
 ### Uso completo (Treinamento e Avaliação)
 
