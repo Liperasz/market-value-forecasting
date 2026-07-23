@@ -11,19 +11,6 @@ from datetime import date
 # ignorando warnings não cruciais para a saída limpa
 warnings.filterwarnings('ignore')
 
-# mapeando identificadores de ligas para as confederações correspondentes
-_UEFA_LEAGUES     = {'ES1','GB1','IT1','FR1','L1','NL1','BE1','PT1','TR1','RU1','GR1','SC1','DK1','SE1'}
-_CONMEBOL_LEAGUES = {'BRA1','ARG1','COL1','CHI1','ECU1','URU1','VEN1','PER1','PAR1','BOL1'}
-_CONCACAF_LEAGUES = {'MLS1','MEX1','JAP1','KOR1'}
-
-# padronizando as ligas para reduzir a dimensão das features de confederação
-def _confederation(domestic_competition_id: str) -> str:
-    lid = str(domestic_competition_id).upper().strip()
-    if lid in _UEFA_LEAGUES:     return 'UEFA'
-    if lid in _CONMEBOL_LEAGUES: return 'CONMEBOL'
-    if lid in _CONCACAF_LEAGUES: return 'CONCACAF'
-    return lid
-
 # abstraindo todo o pipeline de inferência num motor unificado
 class TransferPredictor:
     """
@@ -188,9 +175,11 @@ class TransferPredictor:
             'yellow_cards_season', 'red_cards_season'
         ]}
 
-    def _build_m1_features(self, player_row, club_row, app_stats, year, dob) -> pd.DataFrame:
+    def _build_m1_features(self, player_row, club_row, app_stats, target_date, dob) -> pd.DataFrame:
         """Monta o vetor de features para o Modelo 1."""
-        age = year - dob.year
+        target_date = pd.to_datetime(target_date)
+        age = (target_date - dob).days / 365.25
+        year = target_date.year
         
         # acumulando todos os traços numa visão unificada para input
         feature_dict = player_row.to_dict()
@@ -289,7 +278,8 @@ class TransferPredictor:
 
         # construindo matriz e delegando pra função interna disparar
         app_stats = self._get_app_stats(player_apps, latest_season)
-        X = self._build_m1_features(player_row, club_row, app_stats, current_year, dob)
+        current_date = pd.to_datetime(date.today())
+        X = self._build_m1_features(player_row, club_row, app_stats, current_date, dob)
         return self._predict_m1(X)
 
     def predict_transfer_fee(
@@ -342,12 +332,16 @@ class TransferPredictor:
             season_year = target_season
 
         # encontrando o marco de maturidade físico durante as transferências
-        player_age_at_transfer = transfer_year - dob.year
+        player_age_at_transfer = (date_obj - dob).days / 365.25
 
         # destrinchando proximidades culturais de ligas de confederações
-        buyer_conf  = _confederation(buyer_row.get('domestic_competition_id', ''))
-        seller_conf = _confederation(seller_row.get('domestic_competition_id', ''))
-        same_confederation = 1 if buyer_conf == seller_conf else 0
+        buyer_conf = buyer_row.get('confederation')
+        seller_conf = seller_row.get('confederation')
+        
+        if pd.isna(buyer_conf) or pd.isna(seller_conf):
+            same_confederation = 0
+        else:
+            same_confederation = 1 if buyer_conf == seller_conf else 0
 
         # capturando os multiplicadores de negociação de comprador/vendedor globais
         global_buyer_ratio  = self.club_ratios['buyer'].get('global', 1.0)

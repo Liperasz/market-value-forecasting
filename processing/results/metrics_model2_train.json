@@ -1,0 +1,35 @@
+{
+  "dataset": "validation",
+  "split": {
+    "train_end": "2021-12-31",
+    "val_start": "2022-01-01"
+  },
+  "n_train": 4111,
+  "n_val": 4888,
+  "n_features": 19,
+  "device": "cpu",
+  "MAE_eur": 3747277.432666735,
+  "MAPE_pct": 56.84778403468669,
+  "RMSE_eur": 7777265.794912394,
+  "RMSE_log": 0.6629414754350854,
+  "R2_log": 0.6729810969656012,
+  "R2_real": 0.5995102939945252,
+  "best_params_p50": {
+    "n_estimators": 1028,
+    "max_depth": 5,
+    "learning_rate": 0.012865313502376243,
+    "subsample": 0.7186730579651694,
+    "colsample_bytree": 0.6021186734226314,
+    "reg_alpha": 0.8925979401647732,
+    "reg_lambda": 0.59641556808375,
+    "min_child_weight": 7,
+    "gamma": 0.9584833985899621,
+    "objective": "reg:quantileerror",
+    "tree_method": "hist",
+    "device": "cpu",
+    "random_state": 42,
+    "n_jobs": -1
+  },
+  "optuna_trials": 50,
+  "optuna_best_pinball_p50": 0.24605818184903366
+}
